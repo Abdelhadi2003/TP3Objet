@@ -22,6 +22,24 @@ btnA = Pin(16, Pin.IN, Pin.PULL_UP)
 btnB = Pin(17, Pin.IN, Pin.PULL_UP)
 btnC = Pin(18, Pin.IN, Pin.PULL_UP)
 
+def lire_reponse_boutton():
+    while True:
+        if not btnA.value():
+            ledA.value(1)
+            sleep(1)
+            ledA.value(0)
+            return "a"
+        elif not btnB.value():
+            ledB.value(1)
+            sleep(1)
+            ledB.value(0)
+            return "b"
+        elif not btnC.value():
+            ledC.value(1)
+            sleep(1)
+            ledC.value(0)
+            return "c"
+
 print("|-----------------------------------------------------------------|")
 print("|    Travail pratique 1 - Quiz 4B5 - Abdelhadi Mejdoubi           |")
 print("|-----------------------------------------------------------------|")
@@ -37,18 +55,17 @@ nom_joueur1 = input("Nom du joueur 1: ")
 print("")
 nom_joueur2 = input("Nom du joueur 2: ")
 
-"""annee = datetime.datetime.now().year
-mois = datetime.datetime.now().month
-jour = datetime.datetime.now().day
-heure = datetime.datetime.now().hour
-minute = datetime.datetime.now().minute
-seconde = datetime.datetime.now().second"""
-#formatted_time = "{:02d}/{:02d}/{} {:02d}:{:02d}".format(current_time[2], current_time[1], current_time[0], current_time[3], current_time[4])
-Partie = Partie(utime.localtime(),nom_joueur1, nom_joueur2, list([]), list([]), 0, 0, 0, 0)
+formatted_time = "{:02d}/{:02d}/{} {:02d}:{:02d}".format(
+    utime.localtime()[2],   # jour du mois
+    utime.localtime()[1],   # mois
+    utime.localtime()[0],   # année
+    utime.localtime()[3],   # heure
+    utime.localtime()[4]    # minute
+)
+Partie = Partie(formatted_time,nom_joueur1, nom_joueur2, list([]), list([]), 0, 0, 0, 0)
 
 # Cette partie du code sert à faire l'ordre de jeu des deux joueurs aléatoirement
 listeJoueur = [nom_joueur1, nom_joueur2]
-#random.shuffle(listeJoueur)
 listeJoueur.sort(key=lambda x: random.random())
 
 print("|-----------------------------------------------------------------|")
@@ -92,9 +109,7 @@ for question in les_questions:
     print("<c>" + question["c"])
     print("")
     
-    # Cette partie du code sert à donner le tour de jeu a chaque personne selon l'ordre de jeu ci-haut 
-    
-    
+
     reponse = input(joueurEnJeu + ", entrez votre réponse (a/b/c): ")
     
     if reponse == "a" or reponse == "b" or reponse == "c":
@@ -107,8 +122,6 @@ for question in les_questions:
         # Condition si la réponse du joueur est bonne
         if reponse == question["rep"]:
             if joueurEnJeu == nom_joueur1:
-                print("Bonne réponse!")
-                print("")
                 lcd.backlight_on()
                 lcd.putstr("Bonne reponse!")
                 sleep(2)
@@ -117,30 +130,28 @@ for question in les_questions:
                 Partie.nb_bonnesrepJ1 = Partie.nb_bonnesrepJ1 + 1
                 Partie.listeReponsesJ1.append(question[reponse])
                 if compteur == 10:
-                        lcd.backlight_on()
-                        lcd.putstr("Pointage final\n")
-                        lcd.putstr("des deux joueurs")
-                        sleep(2)
-                        lcd.clear()
-                        lcd.backlight_on()
-                        lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                        lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
-                        sleep(2)
-                        break
+                    lcd.backlight_on()
+                    lcd.putstr("Pointage final\n")
+                    lcd.putstr("des deux joueurs")
+                    sleep(3)
+                    lcd.clear()
+                    lcd.backlight_on()
+                    lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                    lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
+                    sleep(2)
+                    break
                 else:
                     lcd.backlight_on()
                     lcd.putstr("Pointage du tour")
                     lcd.putstr("des deux joueurs")
-                    sleep(2)
+                    sleep(3)
                     lcd.clear()
                     lcd.backlight_on()
-                    lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                    lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
-                    sleep(2)
+                    lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                    lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
+                    sleep(3)
                     lcd.clear() 
             elif joueurEnJeu == nom_joueur2:
-                print("Bonne réponse!")
-                print("")
                 lcd.backlight_on()
                 lcd.putstr("Bonne reponse!")
                 sleep(2)
@@ -149,26 +160,26 @@ for question in les_questions:
                 Partie.nb_bonnesrepJ2 = Partie.nb_bonnesrepJ2 + 1
                 Partie.listeReponsesJ2.append(question[reponse])
                 if compteur == 10:
-                        lcd.backlight_on()
-                        lcd.putstr("Pointage final\n")
-                        lcd.putstr("des deux joueurs")
-                        sleep(2)
-                        lcd.clear()
-                        lcd.backlight_on()
-                        lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                        lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
-                        sleep(2)
-                        break
+                    lcd.backlight_on()
+                    lcd.putstr("Pointage final\n")
+                    lcd.putstr("des deux joueurs")
+                    sleep(3)
+                    lcd.clear()
+                    lcd.backlight_on()
+                    lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                    lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
+                    sleep(2)
+                    break
                 else:        
                     lcd.backlight_on()
                     lcd.putstr("Pointage du tour")
                     lcd.putstr("des deux joueurs")
-                    sleep(2)
+                    sleep(3)
                     lcd.clear()
                     lcd.backlight_on()
-                    lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                    lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
-                    sleep(2)
+                    lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                    lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
+                    sleep(3)
                     lcd.clear() 
             
         # Condition si la réponse du joueur est fausse
@@ -186,16 +197,14 @@ for question in les_questions:
                 lcd.putstr(joueurEnJeu)
                 sleep(2)
                 lcd.clear()
-                reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
                 
+                reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
                 lcd.backlight_on()
                 lcd.putstr(joueurEnJeu +  " a entrer" + "\n" + "la lettre " + reponseReplique )
                 sleep(2)
                 lcd.clear()  
                 
                 if reponseReplique == question["rep"]:
-                    print("Bonne réponse!")
-                    print("")
                     lcd.backlight_on()
                     lcd.putstr("Bonne reponse!")
                     sleep(2)
@@ -207,50 +216,51 @@ for question in les_questions:
                         lcd.backlight_on()
                         lcd.putstr("Pointage final\n")
                         lcd.putstr("des deux joueurs")
-                        sleep(2)
+                        sleep(3)
                         lcd.clear()
                         lcd.backlight_on()
-                        lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                        lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
+                        lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                        lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
                         sleep(2)
                         break
                     else:        
                         lcd.backlight_on()
                         lcd.putstr("Pointage du tour")
                         lcd.putstr("des deux joueurs")
-                        sleep(2)
+                        sleep(3)
                         lcd.clear()
                         lcd.backlight_on()
-                        lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                        lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
-                        sleep(2)
+                        lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                        lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
+                        sleep(3)
                         lcd.clear() 
                     
                 else:
-                    print("Aucun joueur n'a eu la bonne réponse, la bonne réponse est " + question["rep"])
-                    print("")
+                    
                     Partie.listeReponsesJ2.append(question[reponseReplique])
+                    
+                    
                     if compteur == 10:
                         lcd.backlight_on()
                         lcd.putstr("Pointage final\n")
                         lcd.putstr("des deux joueurs")
-                        sleep(2)
+                        sleep(3)
                         lcd.clear()
                         lcd.backlight_on()
-                        lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                        lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
+                        lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                        lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
                         sleep(2)
                         break
                     else:        
                         lcd.backlight_on()
                         lcd.putstr("Pointage du tour")
                         lcd.putstr("des deux joueurs")
-                        sleep(2)
+                        sleep(3)
                         lcd.clear()
                         lcd.backlight_on()
-                        lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                        lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
-                        sleep(2)
+                        lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                        lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
+                        sleep(3)
                         lcd.clear() 
             elif joueurEnJeu == nom_joueur2:
                 Partie.listeReponsesJ2.append(question[reponse])
@@ -265,15 +275,13 @@ for question in les_questions:
                 lcd.putstr(joueurEnJeu)
                 sleep(2)
                 lcd.clear()
-                reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
                 
+                reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
                 lcd.backlight_on()
                 lcd.putstr(joueurEnJeu +  " a entrer" + "\n" + "la lettre " + reponseReplique )
                 sleep(2)
                 lcd.clear()   
                 if reponseReplique == question["rep"]:
-                    print("Bonne réponse!")
-                    print("")
                     lcd.backlight_on()
                     lcd.putstr("Bonne reponse!")
                     sleep(2)
@@ -285,49 +293,49 @@ for question in les_questions:
                         lcd.backlight_on()
                         lcd.putstr("Pointage final\n")
                         lcd.putstr("des deux joueurs")
-                        sleep(2)
+                        sleep(3)
                         lcd.clear()
                         lcd.backlight_on()
-                        lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                        lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
+                        lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                        lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
                         sleep(2)
                         break
                     else:        
                         lcd.backlight_on()
                         lcd.putstr("Pointage du tour")
                         lcd.putstr("des deux joueurs")
-                        sleep(2)
+                        sleep(3)
                         lcd.clear()
                         lcd.backlight_on()
-                        lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                        lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
-                        sleep(2)
+                        lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                        lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
+                        sleep(3)
                         lcd.clear()  
                 else:
-                    print("Aucun joueur n'a eu la bonne réponse, la bonne réponse est " + question["rep"])
-                    print("")
+                    
+                    
                     Partie.listeReponsesJ1.append(question[reponseReplique])
                     if compteur == 10:
                         lcd.backlight_on()
                         lcd.putstr("Pointage final\n")
                         lcd.putstr("des deux joueurs")
-                        sleep(2)
+                        sleep(3)
                         lcd.clear()
                         lcd.backlight_on()
-                        lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                        lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
+                        lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                        lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
                         sleep(2)
                         break
                     else:        
                         lcd.backlight_on()
                         lcd.putstr("Pointage du tour")
                         lcd.putstr("des deux joueurs")
-                        sleep(2)
+                        sleep(3)
                         lcd.clear()
                         lcd.backlight_on()
-                        lcd.putstr(listeJoueur[0] + " : "+str(Partie.pointageJ1) + " ptns\n")
-                        lcd.putstr(listeJoueur[1] + " : "+str(Partie.pointageJ2) + " ptns\n")
-                        sleep(2)
+                        lcd.putstr(nom_joueur1 + " : "+str(Partie.pointageJ1) + " ptns\n")
+                        lcd.putstr(nom_joueur2 + " : "+str(Partie.pointageJ2) + " ptns\n")
+                        sleep(3)
                         lcd.clear() 
 
 # Affichage des informations concernant la partie            
