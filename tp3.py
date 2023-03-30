@@ -109,6 +109,10 @@ for question in les_questions:
             if joueurEnJeu == nom_joueur1:
                 print("Bonne réponse!")
                 print("")
+                lcd.backlight_on()
+                lcd.putstr("Bonne reponse!")
+                sleep(2)
+                lcd.clear() 
                 Partie.pointageJ1 = Partie.pointageJ1 + question["pts"]
                 Partie.nb_bonnesrepJ1 = Partie.nb_bonnesrepJ1 + 1
                 Partie.listeReponsesJ1.append(question[reponse])
@@ -116,7 +120,10 @@ for question in les_questions:
             elif joueurEnJeu == nom_joueur2:
                 print("Bonne réponse!")
                 print("")
-                
+                lcd.backlight_on()
+                lcd.putstr("Bonne reponse!")
+                sleep(2)
+                lcd.clear()
                 Partie.pointageJ2 = Partie.pointageJ2 + question["pts"]
                 Partie.nb_bonnesrepJ2 = Partie.nb_bonnesrepJ2 + 1
                 Partie.listeReponsesJ2.append(question[reponse])
@@ -128,7 +135,15 @@ for question in les_questions:
                 Partie.listeReponsesJ1.append(question[reponse])
                 joueurEnJeu = listeJoueur.pop(0)
                 listeJoueur.append(joueurEnJeu)
-                
+                lcd.backlight_on()
+                lcd.putstr("Mauvaise reponse")
+                sleep(2)
+                lcd.clear()
+                lcd.backlight_on()
+                lcd.putstr("Replique de \n")
+                lcd.putstr(joueurEnJeu)
+                sleep(2)
+                lcd.clear()
                 reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
                 
                 lcd.backlight_on()
@@ -139,7 +154,10 @@ for question in les_questions:
                 if reponseReplique == question["rep"]:
                     print("Bonne réponse!")
                     print("")
-                    
+                    lcd.backlight_on()
+                    lcd.putstr("Bonne reponse!")
+                    sleep(2)
+                    lcd.clear()
                     Partie.pointageJ2 = Partie.pointageJ2 + question["pts"]
                     Partie.nb_bonnesrepJ2 = Partie.nb_bonnesrepJ2 + 1
                     Partie.listeReponsesJ2.append(question[reponseReplique])
@@ -154,7 +172,15 @@ for question in les_questions:
                 Partie.listeReponsesJ2.append(question[reponse])
                 joueurEnJeu = listeJoueur.pop(0)
                 listeJoueur.append(joueurEnJeu)
-                
+                lcd.backlight_on()
+                lcd.putstr("Mauvaise reponse")
+                sleep(2)
+                lcd.clear()
+                lcd.backlight_on()
+                lcd.putstr("Replique de \n")
+                lcd.putstr(joueurEnJeu)
+                sleep(2)
+                lcd.clear()
                 reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
                 
                 lcd.backlight_on()
@@ -164,7 +190,10 @@ for question in les_questions:
                 if reponseReplique == question["rep"]:
                     print("Bonne réponse!")
                     print("")
-                    
+                    lcd.backlight_on()
+                    lcd.putstr("Bonne reponse!")
+                    sleep(2)
+                    lcd.clear()
                     Partie.pointageJ1 = Partie.pointageJ1 + question["pts"]
                     Partie.nb_bonnesrepJ1 = Partie.nb_bonnesrepJ1 + 1
                     Partie.listeReponsesJ1.append(question[reponseReplique])
