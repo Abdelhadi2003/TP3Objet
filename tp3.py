@@ -79,7 +79,11 @@ for question in les_questions:
     joueurEnJeu = listeJoueur.pop(0)
     listeJoueur.append(joueurEnJeu)
     
-    
+    lcd.backlight_on()
+    lcd.putstr("C'est le tour de")
+    lcd.putstr(joueurEnJeu)
+    sleep(2)
+    lcd.clear()
     
     compteur += 1
     print(str(compteur) + ") " +question["q"])
@@ -96,13 +100,11 @@ for question in les_questions:
     if reponse == "a" or reponse == "b" or reponse == "c":
         
          
-         
         # Condition si la réponse du joueur est bonne
         if reponse == question["rep"]:
             if joueurEnJeu == nom_joueur1:
                 print("Bonne réponse!")
                 print("")
-                
                 Partie.pointageJ1 = Partie.pointageJ1 + question["pts"]
                 Partie.nb_bonnesrepJ1 = Partie.nb_bonnesrepJ1 + 1
                 Partie.listeReponsesJ1.append(question[reponse])
@@ -110,7 +112,7 @@ for question in les_questions:
             elif joueurEnJeu == nom_joueur2:
                 print("Bonne réponse!")
                 print("")
-               
+                
                 Partie.pointageJ2 = Partie.pointageJ2 + question["pts"]
                 Partie.nb_bonnesrepJ2 = Partie.nb_bonnesrepJ2 + 1
                 Partie.listeReponsesJ2.append(question[reponse])
@@ -123,9 +125,7 @@ for question in les_questions:
                 joueurEnJeu = listeJoueur.pop(0)
                 listeJoueur.append(joueurEnJeu)
                 
-                reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
-                
-                 
+                reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ") 
                 
                 if reponseReplique == question["rep"]:
                     print("Bonne réponse!")
@@ -148,7 +148,6 @@ for question in les_questions:
                 
                 reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
                 
-                  
                 if reponseReplique == question["rep"]:
                     print("Bonne réponse!")
                     print("")
