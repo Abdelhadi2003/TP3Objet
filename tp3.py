@@ -237,6 +237,24 @@ for question in les_questions:
                         lcd.clear() 
                     
                 else:
+                    if question["rep"] == "a":
+                        for i in range(4):
+                            ledA.value(1)
+                            sleep(0.5)
+                            ledA.value(0)
+                            sleep(0.5)
+                    elif question["rep"] == "b":
+                        for i in range(4):
+                            ledB.value(1)
+                            sleep(0.5)
+                            ledB.value(0)
+                            sleep(0.5)
+                    elif question["rep"] == "c":
+                        for i in range(4):
+                            ledC.value(1)
+                            sleep(0.5)
+                            ledC.value(0)
+                            sleep(0.5)
                     
                     Partie.listeReponsesJ2.append(question[reponseReplique])
                     
@@ -313,7 +331,24 @@ for question in les_questions:
                         sleep(3)
                         lcd.clear()  
                 else:
-                    
+                    if question["rep"] == "a":
+                        for i in range(4):
+                            ledA.value(1)
+                            sleep(0.5)
+                            ledA.value(0)
+                            sleep(0.5)
+                    elif question["rep"] == "b":
+                        for i in range(4):
+                            ledB.value(1)
+                            sleep(0.5)
+                            ledB.value(0)
+                            sleep(0.5)
+                    elif question["rep"] == "c":
+                        for i in range(4):
+                            ledC.value(1)
+                            sleep(0.5)
+                            ledC.value(0)
+                            sleep(0.5)
                     
                     Partie.listeReponsesJ1.append(question[reponseReplique])
                     if compteur == 10:
