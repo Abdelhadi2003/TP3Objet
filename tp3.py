@@ -22,7 +22,7 @@ btnA = Pin(16, Pin.IN, Pin.PULL_UP)
 btnB = Pin(17, Pin.IN, Pin.PULL_UP)
 btnC = Pin(18, Pin.IN, Pin.PULL_UP)
 
-def lire_reponse_boutton():
+def lire_reponse_bouton():
     while True:
         if not btnA.value():
             ledA.value(1)
@@ -109,8 +109,9 @@ for question in les_questions:
     print("<c>" + question["c"])
     print("")
     
-
-    reponse = input(joueurEnJeu + ", entrez votre réponse (a/b/c): ")
+    print(joueurEnJeu + ", entrez votre réponse en cliquant sur le bouton relié à la lettre voulu (a/b/c)")
+    print("")
+    reponse = lire_reponse_bouton()
     
     if reponse == "a" or reponse == "b" or reponse == "c":
         
@@ -198,7 +199,7 @@ for question in les_questions:
                 sleep(2)
                 lcd.clear()
                 
-                reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
+                reponseReplique = lire_reponse_bouton()
                 lcd.backlight_on()
                 lcd.putstr(joueurEnJeu +  " a entrer" + "\n" + "la lettre " + reponseReplique )
                 sleep(2)
@@ -276,7 +277,7 @@ for question in les_questions:
                 sleep(2)
                 lcd.clear()
                 
-                reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
+                reponseReplique = lire_reponse_bouton()
                 lcd.backlight_on()
                 lcd.putstr(joueurEnJeu +  " a entrer" + "\n" + "la lettre " + reponseReplique )
                 sleep(2)
