@@ -99,6 +99,10 @@ for question in les_questions:
     
     if reponse == "a" or reponse == "b" or reponse == "c":
         
+        lcd.backlight_on()
+        lcd.putstr(joueurEnJeu +  " a entrer" + "\n" + "la lettre " + reponse )
+        sleep(2)
+        lcd.clear()  
          
         # Condition si la réponse du joueur est bonne
         if reponse == question["rep"]:
@@ -125,7 +129,12 @@ for question in les_questions:
                 joueurEnJeu = listeJoueur.pop(0)
                 listeJoueur.append(joueurEnJeu)
                 
-                reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ") 
+                reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
+                
+                lcd.backlight_on()
+                lcd.putstr(joueurEnJeu +  " a entrer" + "\n" + "la lettre " + reponseReplique )
+                sleep(2)
+                lcd.clear()  
                 
                 if reponseReplique == question["rep"]:
                     print("Bonne réponse!")
@@ -148,6 +157,10 @@ for question in les_questions:
                 
                 reponseReplique = input("Mauvaise réponse. Réplique à " + joueurEnJeu + " entrez votre réponse (a/b/c) ")
                 
+                lcd.backlight_on()
+                lcd.putstr(joueurEnJeu +  " a entrer" + "\n" + "la lettre " + reponseReplique )
+                sleep(2)
+                lcd.clear()   
                 if reponseReplique == question["rep"]:
                     print("Bonne réponse!")
                     print("")
