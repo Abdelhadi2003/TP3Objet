@@ -51,9 +51,25 @@ print("")
 compteur = 0
 fichierQuestions = "questions.json"
 
+
+
+
+
 nom_joueur1 = input("Nom du joueur 1: ")
 print("")
+
+# Boucle qui valide si le nom du joueur 1 est vide
+while len(nom_joueur1) == 0:
+    nom_joueur1 = input("Nom du joueur 1: ")
+    print("")
+    
 nom_joueur2 = input("Nom du joueur 2: ")
+print("")
+
+# Boucle qui valide si le nom du joueur 2 est vide
+while len(nom_joueur2) == 0:
+    nom_joueur2 = input("Nom du joueur 2: ")
+    print("")
 
 formatted_time = "{:02d}/{:02d}/{} {:02d}:{:02d}".format(
     utime.localtime()[2],   # jour du mois
