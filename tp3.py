@@ -3,7 +3,6 @@
 from machine import I2C, Pin
 from I2C_LCD import I2CLcd
 import json, os
-#import datetime
 from time import sleep
 import utime
 import random
@@ -22,6 +21,7 @@ btnA = Pin(16, Pin.IN, Pin.PULL_UP)
 btnB = Pin(17, Pin.IN, Pin.PULL_UP)
 btnC = Pin(18, Pin.IN, Pin.PULL_UP)
 
+# Fonction qui permet de retourner la lettre qui est relié au bouton cliqué
 def lire_reponse_bouton():
     while True:
         if not btnA.value():
@@ -76,6 +76,7 @@ print("| 2- ", listeJoueur[1], "                                          ")
 print("|-----------------------------------------------------------------|")
 print("")
 
+# Affichage de l'ordre des joueurs dans le LCD
 lcd.backlight_on()
 lcd.putstr("Ordre joueurs : ")
 sleep(2)
@@ -96,6 +97,7 @@ for question in les_questions:
     joueurEnJeu = listeJoueur.pop(0)
     listeJoueur.append(joueurEnJeu)
     
+    # Affichage du tour de jeu dans le LCD 
     lcd.backlight_on()
     lcd.putstr("C'est le tour de")
     lcd.putstr(joueurEnJeu)
@@ -111,10 +113,13 @@ for question in les_questions:
     
     print(joueurEnJeu + ", entrez votre réponse en cliquant sur le bouton relié à la lettre voulu (a/b/c)")
     print("")
+    
+    # La variable reponse prend la valeur retourné de la méthode lire_reponse_bouton()
     reponse = lire_reponse_bouton()
     
     if reponse == "a" or reponse == "b" or reponse == "c":
         
+        # Affichage de la lettre entrée par le joueur dans le LCD
         lcd.backlight_on()
         lcd.putstr(joueurEnJeu +  " a entrer" + "\n" + "la lettre " + reponse )
         sleep(2)
@@ -123,13 +128,18 @@ for question in les_questions:
         # Condition si la réponse du joueur est bonne
         if reponse == question["rep"]:
             if joueurEnJeu == nom_joueur1:
+                
+                # Affichage du message "Bonne reponse" dans le LCD si la réponse du joueur est bonne
                 lcd.backlight_on()
                 lcd.putstr("Bonne reponse!")
                 sleep(2)
                 lcd.clear() 
+                
                 Partie.pointageJ1 = Partie.pointageJ1 + question["pts"]
                 Partie.nb_bonnesrepJ1 = Partie.nb_bonnesrepJ1 + 1
                 Partie.listeReponsesJ1.append(question[reponse])
+                
+                # Condition pour afficher le pointage du tour si le compteur de question est moins de 10 dans le LCD et pour afficher le pointage final si le compteur de question est égale à 10 dans le LCD
                 if compteur == 10:
                     lcd.backlight_on()
                     lcd.putstr("Pointage final\n")
@@ -153,13 +163,18 @@ for question in les_questions:
                     sleep(3)
                     lcd.clear() 
             elif joueurEnJeu == nom_joueur2:
+                
+                # Affichage du message "Bonne reponse" dans le LCD si la réponse du joueur est bonne
                 lcd.backlight_on()
                 lcd.putstr("Bonne reponse!")
                 sleep(2)
                 lcd.clear()
+                
                 Partie.pointageJ2 = Partie.pointageJ2 + question["pts"]
                 Partie.nb_bonnesrepJ2 = Partie.nb_bonnesrepJ2 + 1
                 Partie.listeReponsesJ2.append(question[reponse])
+                
+                # Condition pour afficher le pointage du tour si le compteur de question est moins de 10 dans le LCD et pour afficher le pointage final si le compteur de question est égale à 10 dans le LCD
                 if compteur == 10:
                     lcd.backlight_on()
                     lcd.putstr("Pointage final\n")
@@ -189,6 +204,8 @@ for question in les_questions:
                 Partie.listeReponsesJ1.append(question[reponse])
                 joueurEnJeu = listeJoueur.pop(0)
                 listeJoueur.append(joueurEnJeu)
+                
+                # Affichage du message "Mauvaise reponse" et "Replique de" dans le LCD si la réponse du joueur est mauvaise
                 lcd.backlight_on()
                 lcd.putstr("Mauvaise reponse")
                 sleep(2)
@@ -199,20 +216,28 @@ for question in les_questions:
                 sleep(2)
                 lcd.clear()
                 
+                # La variable reponseReplique prend la valeur retourné de la méthode lire_reponse_bouton()
                 reponseReplique = lire_reponse_bouton()
+                
+                # Affichage de la lettre entrée par le joueur dans le LCD
                 lcd.backlight_on()
                 lcd.putstr(joueurEnJeu +  " a entrer" + "\n" + "la lettre " + reponseReplique )
                 sleep(2)
                 lcd.clear()  
                 
                 if reponseReplique == question["rep"]:
+                    
+                    # Affichage du message "Bonne reponse" dans le LCD si la réponse du joueur est bonne
                     lcd.backlight_on()
                     lcd.putstr("Bonne reponse!")
                     sleep(2)
                     lcd.clear()
+                    
                     Partie.pointageJ2 = Partie.pointageJ2 + question["pts"]
                     Partie.nb_bonnesrepJ2 = Partie.nb_bonnesrepJ2 + 1
                     Partie.listeReponsesJ2.append(question[reponseReplique])
+                    
+                    # Condition pour afficher le pointage du tour si le compteur de question est moins de 10 dans le LCD et pour afficher le pointage final si le compteur de question est égale à 10 dans le LCD
                     if compteur == 10:
                         lcd.backlight_on()
                         lcd.putstr("Pointage final\n")
@@ -237,6 +262,7 @@ for question in les_questions:
                         lcd.clear() 
                     
                 else:
+                    # Condition pour faire clignoter la lumière led attribué à la lettre qui représente la bonne réponse lorsque les deux joueurs ont eu une mauvaise réponse
                     if question["rep"] == "a":
                         for i in range(4):
                             ledA.value(1)
@@ -258,7 +284,7 @@ for question in les_questions:
                     
                     Partie.listeReponsesJ2.append(question[reponseReplique])
                     
-                    
+                    # Condition pour afficher le pointage du tour si le compteur de question est moins de 10 dans le LCD et pour afficher le pointage final si le compteur de question est égale à 10 dans le LCD
                     if compteur == 10:
                         lcd.backlight_on()
                         lcd.putstr("Pointage final\n")
@@ -285,6 +311,8 @@ for question in les_questions:
                 Partie.listeReponsesJ2.append(question[reponse])
                 joueurEnJeu = listeJoueur.pop(0)
                 listeJoueur.append(joueurEnJeu)
+                
+                # Affichage du message "Mauvaise reponse" et "Replique de" dans le LCD si la réponse du joueur est mauvaise
                 lcd.backlight_on()
                 lcd.putstr("Mauvaise reponse")
                 sleep(2)
@@ -295,19 +323,28 @@ for question in les_questions:
                 sleep(2)
                 lcd.clear()
                 
+                # La variable reponseReplique prend la valeur retourné de la méthode lire_reponse_bouton()
                 reponseReplique = lire_reponse_bouton()
+                
+                # Affichage de la lettre entrée par le joueur dans le LCD
                 lcd.backlight_on()
                 lcd.putstr(joueurEnJeu +  " a entrer" + "\n" + "la lettre " + reponseReplique )
                 sleep(2)
-                lcd.clear()   
+                lcd.clear() 
+                  
                 if reponseReplique == question["rep"]:
+                    
+                    # Affichage du message "Bonne reponse" dans le LCD si la réponse du joueur est bonne
                     lcd.backlight_on()
                     lcd.putstr("Bonne reponse!")
                     sleep(2)
                     lcd.clear()
+                    
                     Partie.pointageJ1 = Partie.pointageJ1 + question["pts"]
                     Partie.nb_bonnesrepJ1 = Partie.nb_bonnesrepJ1 + 1
                     Partie.listeReponsesJ1.append(question[reponseReplique])
+                    
+                    # Condition pour afficher le pointage du tour si le compteur de question est moins de 10 dans le LCD et pour afficher le pointage final si le compteur de question est égale à 10 dans le LCD
                     if compteur == 10:
                         lcd.backlight_on()
                         lcd.putstr("Pointage final\n")
@@ -331,6 +368,7 @@ for question in les_questions:
                         sleep(3)
                         lcd.clear()  
                 else:
+                    # Condition pour faire clignoter la lumière led attribué à la lettre qui représente la bonne réponse lorsque les deux joueurs ont eu une mauvaise réponse
                     if question["rep"] == "a":
                         for i in range(4):
                             ledA.value(1)
@@ -351,6 +389,8 @@ for question in les_questions:
                             sleep(0.5)
                     
                     Partie.listeReponsesJ1.append(question[reponseReplique])
+                    
+                    # Condition pour afficher le pointage du tour si le compteur de question est moins de 10 dans le LCD et aussi pour afficher le pointage final si le compteur de question est égale à 10 dans le LCD
                     if compteur == 10:
                         lcd.backlight_on()
                         lcd.putstr("Pointage final\n")
