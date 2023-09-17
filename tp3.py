@@ -14,6 +14,7 @@ I2C_ADDR = i2c.scan()[0]
 
 lcd = I2CLcd(i2c, I2C_ADDR, 2, 16)
 
+
 ledA = Pin(13, Pin.OUT)
 ledB = Pin(12, Pin.OUT)
 ledC = Pin(10, Pin.OUT)
@@ -50,10 +51,6 @@ print("")
 
 compteur = 0
 fichierQuestions = "questions.json"
-
-
-
-
 
 nom_joueur1 = input("Nom du joueur 1: ")
 print("")
